@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
 
     const result = streamText({
       model: modelResult.model,
-      system,
+      instructions: system,
       prompt,
       temperature: 0.7,
       maxOutputTokens: 3000,
@@ -143,8 +143,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // 6. 使用 fullStream 而不是 textStream 来检测错误部分
-    // fullStream 包含 text-delta、error 等不同类型的部分
+    // 6. 使用 stream 而不是 textStream 来检测错误部分
+    // stream 包含 text-delta、error 等不同类型的部分
     const readableStream = new ReadableStream({
       async start(controller) {
         let hasErrored = false
@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
         }
 
         try {
-          for await (const part of result.fullStream) {
+          for await (const part of result.stream) {
             // 检测 onError 回调中设置的错误
             if (streamError) {
               emitError(streamError)

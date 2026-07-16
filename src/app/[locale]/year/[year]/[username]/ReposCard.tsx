@@ -224,7 +224,7 @@ export function ReposCard(props: ReposCardProps) {
 
   const handleModeChange = (value: unknown) => {
     if (value === ReposCardMode.Created || value === ReposCardMode.Interactions) {
-      onModeChange?.(value as ReposCardMode)
+      onModeChange?.(value)
     }
   }
 

@@ -39,6 +39,8 @@ export const auth = betterAuth({
       clientId: process.env.AUTH_GITHUB_ID ?? '',
       clientSecret: process.env.AUTH_GITHUB_SECRET ?? '',
       scope: ['read:user', 'user:email', 'repo'],
+      /** 每次登录时从 GitHub 同步 profile，确保 login 等字段写入 session */
+      overrideUserInfoOnSignIn: true,
       mapProfileToUser: (profile) => ({
         name: profile.name || profile.login,
         email: profile.email,
@@ -54,7 +56,6 @@ export const auth = betterAuth({
       login: {
         type: 'string',
         required: false,
-        input: false,
       },
     },
   },
@@ -66,7 +67,7 @@ export const auth = betterAuth({
       enabled: true,
       maxAge: SESSION_MAX_AGE,
       strategy: 'jwe',
-      version: '2',
+      version: '3',
       refreshCache: true,
     },
   },

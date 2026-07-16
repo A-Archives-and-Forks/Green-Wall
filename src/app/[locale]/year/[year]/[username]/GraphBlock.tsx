@@ -122,7 +122,7 @@ export function GraphBlock() {
 
   const {
     data: reposData,
-    isLoading: reposLoading,
+    isPending: reposLoading,
     error: reposError,
   } = useReposQuery(githubUsername, queryYear, dataAccessOptions, {
     enabled: queriesEnabled,
@@ -142,7 +142,7 @@ export function GraphBlock() {
 
   const {
     data: repoInteractionsData,
-    isLoading: repoInteractionsLoading,
+    isPending: repoInteractionsLoading,
     error: repoInteractionsErrorRaw,
   } = useRepoInteractionsQuery(githubUsername, queryYear, dataAccessOptions, {
     enabled: queriesEnabled && reposCardMode === ReposCardMode.Interactions,
